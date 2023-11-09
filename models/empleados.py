@@ -10,8 +10,8 @@ class Empleados(db.Model):
     
     id_empleados = db.Column(db.Integer, primary_key=True)
     id_rol = db.Column(db.Integer)
-    nombre = db.Column(db.String(45))
-    apellido = db.Column(db.String(45))
+    nombre = db.Column(db.String(50))
+    apellido = db.Column(db.String(50))
     activo = db.Column(db.Boolean)
 
 
@@ -61,6 +61,7 @@ class EmpleadosSchema(ma.Schema):
     id_rol = fields.Integer(required=True, allow_none=False, validate=[validate_int, validar_rol_id])
     nombre = fields.Str(required=True, allow_none=False, validate=validate_str)
     apellido = fields.Str(required=True, allow_none=False, validate=validate_str)
+    activo = fields.Boolean(required=True, allow_none=False)
 
     class Meta:
         fields = ('id_empleados', 'id_rol', 'nombre', 'apellido','activo')

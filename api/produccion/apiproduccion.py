@@ -19,7 +19,7 @@ def produccion(id_empleado = None):
 
     #print(fecha_inicio)
 
-    if fecha_inicio == None:
+    if id_empleado == None:
         result = ProduccionEmpleado.Total(fecha_inicio,fecha_fin)
         return jsonify(result)
     
@@ -35,7 +35,7 @@ def produccion_por_empleado(id):
                                      JOIN empleados ON empleados.id_empleados = produccion.id_empleado
                                      JOIN roles ON roles.id_rol = empleados.id_rol WHERE produccion.id_empleado = :id"""),{"id":id})
     
-    result = result.fetchall()
+    result = result.fetchone()
 
     json = {
         "id_produccion": result[0],

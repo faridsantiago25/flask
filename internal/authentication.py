@@ -14,7 +14,7 @@ def new_token(data: dict):
         "nombre": data["nombre"],
         "apellido": data["apellido"],
         "rol": data["id_rol"],
-        "exp": exprie_date()
+        "exp": exprie_date(1)
 
     },key = "ANYKEY", algorithm="HS256")
     return token.encode("UTF-8")

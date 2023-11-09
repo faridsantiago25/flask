@@ -8,8 +8,8 @@ class Productos(db.Model):
     id_productos = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(45))
     precio = db.Column(db.Float)
-    compensacion_unidad = db.Column(db.Float, nullable=True)
-    compensacion_paquete = db.Column(db.Float, nullable=True)
+    compensacion_unidad = db.Column(db.Float)
+    compensacion_paquete = db.Column(db.Float)
     tipo = db.Column(db.String(45))
 
     def __init__(self,id_productos, nombre, precio, compensacion_unidad, compensacion_paquete, tipo):
@@ -57,9 +57,9 @@ def validar_tipo_producto(val):
 class ProductosSchema(ma.Schema):
     id_productos = fields.Integer(allow_none=False)
     nombre = fields.String(allow_none=False, validate=[validate_str, validar_producto])
-    precio = fields.Float(required=True, allow_none = False, validate=[validate_float])
-    compensacion_unidad = fields.Float(required=True, allow_none = False, validate=[validate_float])
-    compensacion_paquete = fields.Float(required=True, allow_none = False, validate=[validate_float])
+    precio = fields.Float(required=True, allow_none = False, validate=validate_int)
+    compensacion_unidad = fields.Float(required=True, allow_none = False, validate=validate_float)
+    compensacion_paquete = fields.Float(required=True, allow_none = False, validate=validate_float)
     tipo = fields.String(required=True, allow_none = False, validate=[validate_str, validar_tipo_producto])
 
     class Meta:

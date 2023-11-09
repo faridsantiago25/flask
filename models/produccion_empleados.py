@@ -12,8 +12,9 @@ class ProduccionEmpleado(db.Model):
     cantidad_total = db.Column(db.Integer)
     fecha = db.Column(db.DateTime)
     precio = db.Column(db.Integer)
+    nombre_rol = db.Column(db.String(50))
 
-    def _init_(self, id_produccion_empleado, nombre, apellido, nombre_producto, compensacion_unidad, compensacion_paquete, cantidad_total, fecha, precio):
+    def _init_(self, id_produccion_empleado, nombre, apellido, nombre_producto, compensacion_unidad, compensacion_paquete, cantidad_total, fecha, precio,nombre_rol):
         self.id_produccion_empleado = id_produccion_empleado
         self.nombre = nombre
         self.apellido = apellido
@@ -23,6 +24,7 @@ class ProduccionEmpleado(db.Model):
         self.cantidad_total = cantidad_total
         self.fecha = fecha
         self.precio = precio
+        self.nombre_rol = nombre_rol
 
     def calculo_compensacion_paquete(produccion):
         
@@ -42,6 +44,8 @@ class ProduccionEmpleado(db.Model):
         new['precio_unidad'] = produccion['precio']
         new['porcentaje'] = produccion['compensacion_paquete']
         new['nombre_empleado'] = produccion['nombre'] + ' ' + produccion['apellido']
+        new['fecha'] = produccion['fecha']
+        new['nombre_rol'] = produccion['nombre_rol']
 
         return new
     
@@ -59,6 +63,8 @@ class ProduccionEmpleado(db.Model):
         new['precio_unidad'] = produccion['precio']
         new['porcentaje'] = produccion['compensacion_unidad']
         new['nombre_empleado'] = produccion['nombre'] + ' ' + produccion['apellido']
+        new['fecha'] = produccion['fecha']
+        new['nombre_rol'] = produccion['nombre_rol']
 
         return new
     
@@ -178,7 +184,8 @@ class ProduccionEmpleadoSchema(ma.Schema):
     cantidad_total = fields.Integer(required=True, allow_none=False)
     fecha = fields.DateTime(required=True, allow_none=False)
     precio = fields.Integer(required=True, allow_none=False)
+    nombre_rol = fields.Str(required=True, allow_none=False)
 
 
     class Meta:
-        fields = ('id_produccion_empleado', 'nombre', 'apellido', 'nombre_producto', 'compensacion_unidad', 'compensacion_paquete', 'cantidad_total', 'fecha', 'precio')
+        fields = ('id_produccion_empleado', 'nombre', 'apellido', 'nombre_producto', 'compensacion_unidad', 'compensacion_paquete', 'cantidad_total', 'fecha', 'precio','nombre_rol')

@@ -1,5 +1,5 @@
-from flask import Blueprint,redirect,request,jsonify,session,render_template
-from config.db import app, db, ma
+from flask import Blueprint,request,jsonify,session
+from config.db import db
 from models.roles import Roles, RolesSchema
 
 ruta_roles = Blueprint("routes_roles", __name__) 

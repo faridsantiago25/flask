@@ -4,8 +4,8 @@ from models.empleados import Empleados, EmpleadosSchema
 from sqlalchemy import text
 from marshmallow import ValidationError
 import json
-ruta_empleados = Blueprint("routes_empleados", __name__)
 
+ruta_empleados = Blueprint("routes_empleados", __name__)
 empleado_schema = EmpleadosSchema()
 empleado_schemas = EmpleadosSchema(many=True)
 
@@ -31,6 +31,8 @@ def lista_empleados():
         }
         total_empleados.append(json)
 
+    return jsonify(total_empleados)
+
 #post
 @ruta_empleados.route('/empleados', methods=['POST'])
 def create_empleado():
@@ -40,7 +42,7 @@ def create_empleado():
     if errors:
         return {"error":errors},422
     
-    result = Empleados(json_data['id_empleados'],json_data['nombre'],json_data['apellido'],json_data['id_rol'])
+    result = Empleados(json_data['id_empleados'],json_data['nombre'],json_data['apellido'],json_data['id_rol'],json_data['activo'])
     db.session.add(result)
     db.session.commit()
     return empleado_schema.jsonify(result)
