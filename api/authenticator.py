@@ -16,7 +16,7 @@ def login():
         response.status_code = 400
         return response
     
-    result = db.session.execute(text("SELECT empleados.id_empleados, empleados.nombre, empleados.apellido, roles.nombre FROM empleados JOIN roles ON roles.id_rol WHERE empleados.id_empleados = :id"),{"id":id})
+    result = db.session.execute(text("SELECT empleados.id_empleados, empleados.nombre, empleados.apellido, roles.nombre FROM empleados JOIN roles ON roles.id_rol=empleados.id_rol WHERE empleados.id_empleados = :id"),{"id":id})
     result = result.fetchone()
 
     if result == None:
@@ -28,7 +28,7 @@ def login():
         "id_empleados": result[0],
         "nombre": result[1],
         "apellido": result[2],
-        "rol": result[3]
+        "id_rol": result[3]
     }
     return jsonify(new_token(payload).decode('UTF-8'))
 

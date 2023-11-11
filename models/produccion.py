@@ -29,7 +29,7 @@ class Produccion(db.Model):
                                           JOIN productos ON productos.id_productos = produccion.id_producto
                                           JOIN empleados ON empleados.id_empleados = produccion.id_empleado
                                           WHERE empleados.id_empleados = :id_empleado GROUP BY empleados.nombre, empleados.apellido, produccion.fecha,
-                                          productos.nombre, productos.id_productos"""),)
+                                          productos.nombre, productos.id_productos"""),{'id_empleado':id_empleado})
         
         return results
     

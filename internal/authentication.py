@@ -9,6 +9,7 @@ def exprie_date(days: int):
     return new_date
 
 def new_token(data: dict):
+    print(data)
     token = jwt.encode({
         "id": data["id_empleados"],
         "nombre": data["nombre"],
