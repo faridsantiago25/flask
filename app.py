@@ -9,23 +9,23 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 from internal.authentication import validate_token
 
-app.register_blueprint(authenticator_routes)
+#app.register_blueprint(authenticator_routes)
 
-@ruta_empleados.before_request
-@ruta_productos.before_request
-@ruta_produccion.before_request
-@ruta_roles.before_request
+#@ruta_empleados.before_request
+#@ruta_productos.before_request
+#@ruta_produccion.before_request
+#@ruta_roles.before_request
 
-def if_logged_into():
-    request_parameters = request.args
+#def if_logged_into():
+#    request_parameters = request.args
 
-    if request_parameters.get('Authorization') == None:
-        response = jsonify({"message": "Token not found"})
-        response.status_code = 404
-        return response
+#    if request_parameters.get('Authorization') == None:
+#        response = jsonify({"message": "Token not found"})
+#        response.status_code = 404
+#        return response
     
-    token = request_parameters.get('Authorization').split(" ")[1]
-    return validate_token(token, False)
+#    token = request_parameters.get('Authorization').split(" ")[1]
+#    return validate_token(token, False)
 
 app.register_blueprint(ruta_empleados)
 app.register_blueprint(ruta_productos)

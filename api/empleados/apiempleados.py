@@ -42,7 +42,7 @@ def create_empleado():
     if errors:
         return {"error":errors},422
     
-    result = Empleados(json_data['id_empleados'],json_data['nombre'],json_data['apellido'],json_data['id_rol'],json_data['activo'])
+    result = Empleados(json_data['id_empleados'],json_data['id_rol'],json_data['nombre'],json_data['apellido'])
     db.session.add(result)
     db.session.commit()
     return empleado_schema.jsonify(result)

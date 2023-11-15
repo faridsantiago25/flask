@@ -5,6 +5,7 @@ from marshmallow import fields
 class ProduccionEmpleado(db.Model):
     id_produccion_empleado = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50))
+    first_name = db.Column(db.String(50))
     apellido = db.Column(db.String(50))
     nombre_producto = db.Column(db.String(50))
     compensacion_unidad = db.Column(db.Float)
@@ -14,9 +15,10 @@ class ProduccionEmpleado(db.Model):
     precio = db.Column(db.Integer)
     nombre_rol = db.Column(db.String(50))
 
-    def _init_(self, id_produccion_empleado, nombre, apellido, nombre_producto, compensacion_unidad, compensacion_paquete, cantidad_total, fecha, precio,nombre_rol):
+    def _init_(self, id_produccion_empleado, nombre,first_name ,apellido, nombre_producto, compensacion_unidad, compensacion_paquete, cantidad_total, fecha, precio,nombre_rol):
         self.id_produccion_empleado = id_produccion_empleado
         self.nombre = nombre
+        self.first_name = first_name
         self.apellido = apellido
         self.nombre_producto = nombre_producto
         self.compensacion_unidad = compensacion_unidad
@@ -40,10 +42,11 @@ class ProduccionEmpleado(db.Model):
         new['compensacion'] = compensacionPaquete
         new['precio'] = precioPaquete
         new['nombre'] = produccion['nombre']
+        new ['first_name'] = produccion['first_name']
         new['cantidad'] = 12
         new['precio_unidad'] = produccion['precio']
         new['porcentaje'] = produccion['compensacion_paquete']
-        new['nombre_empleado'] = produccion['nombre'] + ' ' + produccion['apellido']
+        new['nombre_empleado'] = produccion['first_name'] + ' ' + produccion['apellido']
         new['fecha'] = produccion['fecha']
         new['nombre_rol'] = produccion['nombre_rol']
 
@@ -59,10 +62,11 @@ class ProduccionEmpleado(db.Model):
         new['compensacion'] = precioRestante * (produccion['compensacion_unidad'] / 100)
         new['precio'] = precioRestante
         new['nombre'] = produccion['nombre']
+        new ['first_name'] = produccion['first_name']
         new['cantidad'] = restante
         new['precio_unidad'] = produccion['precio']
         new['porcentaje'] = produccion['compensacion_unidad']
-        new['nombre_empleado'] = produccion['nombre'] + ' ' + produccion['apellido']
+        new['nombre_empleado'] = produccion['first_name'] + ' ' + produccion['apellido']
         new['fecha'] = produccion['fecha']
         new['nombre_rol'] = produccion['nombre_rol']
 
@@ -102,7 +106,7 @@ class ProduccionEmpleado(db.Model):
             fecha_fin = '2999-01-01'
         
         result = db.session.execute(text('''SELECT SUM(produccion.cantidad) AS cantidad_total,
-                                            empleados.nombre, 
+                                            empleados.nombre AS first_name, 
                                             empleados.apellido, 
                                             produccion.fecha, 
                                             productos.nombre,
@@ -142,7 +146,7 @@ class ProduccionEmpleado(db.Model):
             fecha_fin = '2999-01-01'
         
         result = db.session.execute(text('''SELECT SUM(produccion.cantidad) AS cantidad_total,
-                                         empleados.nombre,
+                                         empleados.nombre AS first_name,
                                          empleados.apellido,
                                          produccion.fecha,
                                          productos.nombre,
@@ -177,6 +181,7 @@ class ProduccionEmpleado(db.Model):
 class ProduccionEmpleadoSchema(ma.Schema):
     id_produccion_empleado = fields.Integer(allow_none=False)
     nombre = fields.Str(required=True, allow_none=False)
+    first_name = fields.Str(required=True, allow_none=False)
     apellido = fields.Str(required=True, allow_none=False)
     nombre_producto = fields.Str(required=True, allow_none=False)
     compensacion_unidad = fields.Float(required=True, allow_none=False)
@@ -188,4 +193,4 @@ class ProduccionEmpleadoSchema(ma.Schema):
 
 
     class Meta:
-        fields = ('id_produccion_empleado', 'nombre', 'apellido', 'nombre_producto', 'compensacion_unidad', 'compensacion_paquete', 'cantidad_total', 'fecha', 'precio','nombre_rol')
+        fields = ('id_produccion_empleado', 'nombre','first_name', 'apellido', 'nombre_producto', 'compensacion_unidad', 'compensacion_paquete', 'cantidad_total', 'fecha', 'precio','nombre_rol')
